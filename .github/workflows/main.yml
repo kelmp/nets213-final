@@ -24,8 +24,8 @@ jobs:
 
     # Create a zip file with all files required by the module to add to the release
     - run: |
-      cd ./foundry-interpreter
-      zip -r ./module.zip module.json ./styles/ ./scripts/ ./templates/ ./languages/
+        cd ./foundry-interpreter
+        zip -r ./module.zip module.json ./styles/ ./scripts/ ./templates/ ./languages/
 
     # Create a release for this specific version
     - name: Update Release with Files
