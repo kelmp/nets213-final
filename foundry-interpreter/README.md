@@ -1,3 +1,8 @@
+# Foundry Interpreter (working title)
+
+This folder should contain code for the FoundryVTT module used to translate 
+parsed data into in-game actions.
+
 ![](https://img.shields.io/badge/Foundry-v0.7.9-informational)
 <!--- Downloads @ Latest Badge -->
 <!--- replace <user>/<repo> with your username/repository -->
