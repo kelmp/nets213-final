@@ -1,7 +1,7 @@
 {
-  "name": "module",
-  "title": "New Module",
-  "description": "",
+  "name": "foundry-interpreter",
+  "title": "Foundry Interpreter",
+  "description": "Takes data from a standardized format and translates it into actions in Foundry",
   "version": "This is auto replaced",
   "library": "false",
   "manifestPlusVersion": "1.0.0",
@@ -9,9 +9,25 @@
   "compatibleCoreVersion": "0.7.9",
   "authors": [
     {
-      "name": "The League of Extraordinary FVTT Developers",
-      "url": "https://github.com/League-of-Foundry-Developers",
-      "discord": "discordID#0001"
+      "name": "Adrian Wang",
+      "url": "https://github.com/seacaster",
+      "discord": "hellothere#6350"
+    },
+	{
+      "name": "Campbell Phalen",
+      "url": "https://github.com/cphalen",
+    },
+	{
+      "name": "Gabrielle Hemlick",
+      "url": "https://github.com/ghemlick",
+    },
+	{
+      "name": "Benjamin Zhang",
+      "url": "https://github.com/bzhang9999",
+    },
+	{
+      "name": "Rafal Promowicz",
+      "url": "https://github.com/RafalPro",
     }
   ],
   "dependencies": [
