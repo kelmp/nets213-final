@@ -1,0 +1,30 @@
+//This is sample output from one worker
+
+[
+  {
+    "crowd-entity-annotation": {
+      "entities": [
+        {
+          "endOffset": 13,
+          "label": "spell",
+          "startOffset": 10
+        },
+        {
+          "endOffset": 56,
+          "label": "action",
+          "startOffset": 48
+        },
+        {
+          "endOffset": 79,
+          "label": "person",
+          "startOffset": 72
+        },
+        {
+          "endOffset": 93,
+          "label": "action",
+          "startOffset": 90
+        }
+      ]
+    }
+  }
+]
