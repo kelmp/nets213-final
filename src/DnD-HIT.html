@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D&D Tagging</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    a { text-decoration: none; }
+    a.untagged { color: black; background-color: white; }
+    .tentative { background-color: mediumspringgreen }
+    .tag { color: white; }
+    .tag.creature { background-color: darkblue; }
+    .tag.target { background-color: darkred; }
+    .tag.attack { background-color: darkolivegreen; }
+    .tag.spell { background-color: darkmagenta; }
+    .tag.feature { background-color: darkgoldenrod; }
+    .tag.attackRoll { background-color: slategray; }
+    .tag.damageRoll { background-color: orangered; }
+    .tag.savingThrow { background-color: teal; }
+    div.instructions { padding-top: 1em; padding-bottom: 1em; }
+    div.warning { color: darkred; }
+    div.complete { padding-top: 2em; padding-bottom: 2em; }
+    div.actions { white-space: pre-wrap; }
+
+    /*A:link {text-decoration: none; color: black;}*/
+    /*A:visited {text-decoration: none; color: black;}*/
+    /*A:active {text-decoration: none; color: black;}*/
+    /*A:hover {text-decoration: none; color: black;}*/
+</style>
+<script type="text/Javascript">
+    const sentence = "This is some sample text. " +
+        "Actions may span across multiple sentences. " +
+        "Please submit one action at a time until all actions in the provided " +
+        "text have been submitted.";
+    // split based on one or more whitespace
+    const words = sentence.split(/\s+/);
+    const actions = [];
+    let currentAction = {};
+    actions.unshift(currentAction);
+    const history = [];
+    const selectedIndices = new Set();
+    let showingWarning = false;
+
+    // submit tag on keypress
+    $(document).keydown(e => {
+        console.log(e.which);
+        switch (e.which) {
+            case 49: // 1
+                tagCurrentWords("creature");
+                break;
+            case 50: // 2
+                tagCurrentWords("target");
+                break;
+            case 51: // 3
+                tagCurrentWords("attack");
+                break;
+            case 52: // 4
+                tagCurrentWords("spell");
+                break;
+            case 53: // 5
+                tagCurrentWords("feature");
+                break;
+            case 81: // Q
+                tagCurrentWords("attackRoll");
+                break;
+            case 87: // W
+                tagCurrentWords("damageRoll");
+                break;
+            case 69: // E
+                tagCurrentWords("savingThrow");
+                break;
+            case 9: // tab
+                submitAction();
+                break;
+            default:
+                console.log("No tag selected");
+                break;
+        }
+    });
+
+    function tagCurrentWords(tag) {
+        if (selectedIndices.size === 0) {
+            document.getElementById("warnings").innerHTML =
+                "Please select one or more words to tag as an entity."
+            showingWarning = true;
+            return;
+        }
+        history.unshift(tag);
+        const newWords = Array.from(selectedIndices).sort().map(i => words[i]);
+        if (currentAction.hasOwnProperty(tag)) {
+            currentAction[tag].unshift(newWords);
+        } else {
+            currentAction[tag] = [newWords];
+        }
+        // set new tag colors
+        selectedIndices.forEach(i =>
+            getWordElement(i).className = `tag ${tag}`);
+        selectedIndices.clear();
+        displayCurrentActions();
+        displayHistory();
+    }
+
+    function submitAction() {
+        if (Object.getOwnPropertyNames(currentAction).length === 0) {
+            document.getElementById("warnings").innerHTML =
+                "Please tag something, or click the " +
+                "\"There are no actions in this text\" button."
+            showingWarning = true;
+            return;
+        }
+        history.shift("submitted");
+        currentAction = {};
+        actions.unshift(currentAction);
+        for (let i = 0; i < words.length; i++) {
+            getWordElement(i).className = "untagged";
+        }
+        selectedIndices.clear();
+        displayCurrentActions();
+        displayHistory();
+    }
+
+    function undo() {
+        const len = history.length;
+        if (len === 0) {
+            return;
+        }
+        let toUndo = history.shift();
+        switch (toUndo) {
+            case "submitted":
+                actions.shift();
+                currentAction = actions[actions.length - 1];
+                break;
+            default:
+                const entities = currentAction[toUndo];
+                if (entities.length === 1) {
+                    delete currentAction[toUndo];
+                } else {
+                    entities.shift();
+                }
+                break;
+        }
+        displayCurrentActions();
+        displayHistory();
+    }
+    
+    function displayCurrentActions() {
+        document.getElementById("current-actions").innerHTML =
+            JSON.stringify(actions, null, 4);
+    }
+
+    function displayHistory() {
+        document.getElementById("history").innerHTML =
+            JSON.stringify(history);
+    }
+
+    // This method wraps every word in a sentence with a javascript click function.
+    function writeSentence(words) {
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            document.write(
+                ` <span><a id="word.${i}" class="untagged" href="">${word}</a></span> `
+            );
+            document.getElementById(`word.${i}`).addEventListener("click", (e) => {
+                e.preventDefault();
+                clickWord(i);
+                return false;
+            });
+        }
+    }
+
+    function getWordElement(i) {
+        return document.getElementById(`word.${i}`);
+    }
+
+    function clearWarning() {
+        if (showingWarning) {
+            document.getElementById("warnings").innerHTML = "";
+        }
+    }
+
+    function clickWord(x) {
+        clearWarning();
+        const wordElement = getWordElement(x);
+        if (selectedIndices.has(x)) {
+            // user is deselecting this word
+            selectedIndices.delete(x);
+            wordElement.className = "untagged";
+        } else {
+            // user is selecting this word
+            selectedIndices.add(x);
+            wordElement.className = "tentative";
+        }
+    }
+
+    // display text
+    writeSentence(words);
+
+    window.addEventListener("load", () => {
+        displayCurrentActions();
+        displayHistory();
+    });
+</script>
+<body>
+<br />
+<div class="instructions">Use keybinds or the buttons below to tag your currently selected words.</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Command</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1</td>
+        <td><button id="creature-button" onclick="tagCurrentWords('creature')">Creature doing the action</button></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td><button id="target-button" onclick="tagCurrentWords('target')">Target(s) of the action</button></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td><button id="attack-button" onclick="tagCurrentWords('attack')">A (non spell) attack being made with...</button></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td><button id="spell-button" onclick="tagCurrentWords('spell')">The spell being cast</button></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td><button id="feature-button" onclick="tagCurrentWords('feature')">The class, racial, or other feature being used</button></td>
+    </tr>
+    <tr>
+        <td>Q</td>
+        <td><button id="attack-roll-button" onclick="tagCurrentWords('attackRoll')">The result of an attack roll</button></td>
+    </tr>
+    <tr>
+        <td>W</td>
+        <td><button id="damage-roll-button" onclick="tagCurrentWords('damageRoll')">The result of a damage roll</button></td>
+    </tr>
+    <tr>
+        <td>E</td>
+        <td><button id="saving-throw-button" onclick="tagCurrentWords('savingThrow')">The result of a saving throw</button></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <button id="action-button" onclick="submitAction()">Done with this action</button>
+    <button id="undo-button" onclick="undo()">Undo</button>
+</div>
+<div id="warnings" class="warning"></div>
+<div class="complete">
+    <button id="submit-button">Finished with this block of text</button>
+    <button id="nothing-button">There are no actions in this text</button>
+</div>
+<div>History</div>
+<div id="history"></div>
+<div>Current actions</div>
+<div id="current-actions" class="actions"></div>
+
+</body>
+</html>
