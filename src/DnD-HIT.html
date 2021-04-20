@@ -33,8 +33,14 @@
     //     "Actions may span across multiple sentences. " +
     //     "Please submit one action at a time until all actions in the provided " +
     //     "text have been submitted.";
-    const sentence = "Rubis Hypnotic Pattern Bardic Inspiration Counterspell " +
-        "imps and the devil Lavander hooded warlock";
+    const sentence = "Rubis sees his friends in danger, and pulls his trusty " +
+        "spoons from his back pocket. With a quick rhythmic clatter, they " +
+        "start to glow, providing Lavander with Bardic Inspiration. He then " +
+        "turns his attention to the barbed devil and chittering imps that are " +
+        "slashing at Rus. The spoons in his hand clack faster and faster as " +
+        "faint voices make themselves heard in the imps' minds. These voices " +
+        "intensify as Rubis continues casting Fear, conjuring terrifying " +
+        "possibilities and magical horrors in their minds' eye.";
 
     // split based on one or more whitespace
     const words = sentence.split(/\s+/);
@@ -223,11 +229,11 @@
     </tr>
     <tr>
         <td>2</td>
-        <td><button id="target-button" onclick="tagCurrentWords('target')">Target(s) of the action</button></td>
+        <td><button id="target-button" onclick="tagCurrentWords('target')">One target of the action</button></td>
     </tr>
     <tr>
         <td>3</td>
-        <td><button id="attack-button" onclick="tagCurrentWords('attack')">A (non spell) attack being made with...</button></td>
+        <td><button id="attack-button" onclick="tagCurrentWords('attack')">Something being used to make a (non spell) attack</button></td>
     </tr>
     <tr>
         <td>4</td>
