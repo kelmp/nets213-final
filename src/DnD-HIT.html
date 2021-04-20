@@ -29,10 +29,13 @@
     /*A:hover {text-decoration: none; color: black;}*/
 </style>
 <script type="text/Javascript">
-    const sentence = "This is some sample text. " +
-        "Actions may span across multiple sentences. " +
-        "Please submit one action at a time until all actions in the provided " +
-        "text have been submitted.";
+    // const sentence = "This is some sample text. " +
+    //     "Actions may span across multiple sentences. " +
+    //     "Please submit one action at a time until all actions in the provided " +
+    //     "text have been submitted.";
+    const sentence = "Rubis Hypnotic Pattern Bardic Inspiration Counterspell " +
+        "imps and the devil Lavander hooded warlock";
+
     // split based on one or more whitespace
     const words = sentence.split(/\s+/);
     const actions = [];
@@ -109,7 +112,7 @@
             showingWarning = true;
             return;
         }
-        history.shift("submitted");
+        history.unshift("submitted");
         currentAction = {};
         actions.unshift(currentAction);
         for (let i = 0; i < words.length; i++) {
@@ -121,6 +124,7 @@
     }
 
     function undo() {
+        // TODO: make this undo highlighting as well
         const len = history.length;
         if (len === 0) {
             return;
@@ -129,7 +133,7 @@
         switch (toUndo) {
             case "submitted":
                 actions.shift();
-                currentAction = actions[actions.length - 1];
+                currentAction = actions[0];
                 break;
             default:
                 const entities = currentAction[toUndo];
@@ -143,7 +147,7 @@
         displayCurrentActions();
         displayHistory();
     }
-    
+
     function displayCurrentActions() {
         document.getElementById("current-actions").innerHTML =
             JSON.stringify(actions, null, 4);
