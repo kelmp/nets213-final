@@ -1,5 +1,3 @@
-import pandas as pd
-import json
 from common import read_answers
 
 
