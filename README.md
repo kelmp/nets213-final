@@ -55,11 +55,11 @@ We have come up with the following rubric for our project:
 
 
 ## Important Files
-/docsFlowDiagram.png -> Flow diagram modeling the interaction between our modules\
-/docs/HIT mockup.png -> mockup of our HIT design\
-/docs/User Applciation mock-up.png -> mockup of our user application\
-/data/phandelever-labels.json -> our raw data\ 
-/data/sampleAggregationInput.csv -> sample input to aggregation module\
-/data/sampleQCInput.csv -> TODO\ 
-/src/TODO QUALITY CONTROL CODE -> include short description describing how it works\ 
-/src/TODO AGGREGATION CODE -> include a short description describing how it works\ 
+/docsFlowDiagram.png -> Flow diagram modeling the interaction between our modules<br/>
+/docs/HIT mockup.png -> mockup of our HIT design<br/>
+/docs/User Applciation mock-up.png -> mockup of our user application<br/>
+/data/phandelever-labels.json -> our raw data<br/> 
+/data/sampleAggregationInput.csv -> sample input to aggregation module<br/>
+/data/sampleQCInput.csv -> TODO<br/>
+/src/TODO QUALITY CONTROL CODE -> include short description describing how it works<br/> 
+/src/TODO AGGREGATION CODE -> include a short description describing how it works<br/> 
