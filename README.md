@@ -8,20 +8,22 @@ Let's overview the major components in this project.
 
 This is how we will annotation our training data. The worker will tag relevant
 things from the sentence, namely: who is the object, who is the target, what
-kind of action are they performing?
+kind of action are they performing? Our current HIT design is in
+`src/DnD-HIT.html`.
 
 ### Quality Control
 
 We will use an embedded Gold Standard in our MTurk HITs. The worker's
 performance on these Gold Standard examples is used as a weight to compute the
-majority vote using weighted averages.
+majority vote using weighted averages. Our current rough implementation is in
+`src/qc.py`.
 
 ### Aggregation
 
 In order to train the model we need to during all of the MTurk data into a CSV
 that can be read into the model. We also need to ensure there are no duplicates,
 sentences are correctly structured, and may possibly perform NLP operations to
-sanitize the data.
+sanitize the data. Our current rough implementation is in `src/aggregation2.py`.
 
 ### Trained Model
 
@@ -29,6 +31,7 @@ This is the actual model we are training with the aggregated data. The model
 will take in a plain text sentence and attempt to perform the same annotation
 process as the MTurk workers did previously. That is to say, it should identify
 the object of the sentence, target of an action, and the action being performed.
+These files will be in `ml-parser`.
 
 ### User-Facing Application
 
@@ -87,11 +90,17 @@ We have come up with the following rubric for our project:
 
 ## Important Files
 
-/docsFlowDiagram.png -> Flow diagram modeling the interaction between our
-modules<br/> /docs/HIT mockup.png -> mockup of our HIT design<br/> /docs/User
-Applciation mock-up.png -> mockup of our user application<br/>
-/data/phandelever-labels.json -> our raw data<br/>
-/data/sampleAggregationInput.csv -> sample input to aggregation module<br/>
-/data/sampleQCInput.csv -> TODO<br/> /src/TODO QUALITY CONTROL CODE -> include
-short description describing how it works<br/> /src/TODO AGGREGATION CODE ->
-include a short description describing how it works<br/>
+- `docsFlowDiagram.png` - Flow diagram modeling the interaction between our
+  modules
+- `docs/HIT mockup.png` - mockup of our HIT design
+- `docs/User Application mock-up.png` - mockup of our user application
+- `data/phandelever-labels.json` - our raw data
+- `data/sampleAggregationInput.csv` - sample input to aggregation module
+- `data/sampleAggregationOutput.csv` - sample output from aggregation module
+- `data/qcInput.csv` - sample input to quality control module
+- `data/qcOutput.csv` - sample output from quality control module
+- `src/aggregation2.py` - our current implementation of aggregation, centering
+  around messy use of JSON strings
+- `src/qc.py` - our current implementation of quality control, which uses gold
+  standard accuracies to vote on correct actions
+- `src/DnD-HIT.html` - our current implementation of the MTurk HIT
