@@ -52,3 +52,14 @@ We have come up with the following rubric for our project:
     - [3] Unintuitive interface that properly handles user input, sends the input through our model, routes the model’s output through the Avrae command generator API, and displays the response command from Avrae.
     - [2] Unintuitive interface that handles user input, sends the input through our model, routes the model’s output through the Avrae command generator API, and displays the response command from Avrae, but sometimes fails or faults resulting in the user not receiving the response.
     - [1] Unintuitive interface that never correctly responds with the proper output.
+
+
+## Important Files
+/docsFlowDiagram.png -> Flow diagram modeling the interaction between our modules
+/docs/HIT mockup.png -> mockup of our HIT design
+/docs/User Applciation mock-up.png -> mockup of our user application
+/data/phandelever-labels.json -> our raw data
+/data/sampleAggregationInput.csv -> sample input to aggregation module
+/data/sampleQCInput.csv -> TODO
+/src/TODO QUALITY CONTROL CODE -> include short description describing how it works
+/src/TODO AGGREGATION CODE -> include a short description describing how it works
