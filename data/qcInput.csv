@@ -1,0 +1,7 @@
+WorkerId,Input.prompt,Answer.answer
+1,1alone,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "1"]]}`
+2,1alone,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "2"], ["worker", "3"]]}`
+3,1alone,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "2"], ["worker", "3"]]}`
+1,1with3,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "1"], ["worker", "3"]]}`
+2,1with3,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "2"]]}`
+3,1with3,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "1"], ["worker", "3"]]}`

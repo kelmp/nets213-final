@@ -1,0 +1,3 @@
+Input.prompt,Answer.answer
+1alone,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "1"]]}`
+1with3,`{"creature": [["response"]], "spell": [["from"]], "target": [["worker", "1"], ["worker", "3"]]}`
