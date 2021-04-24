@@ -157,17 +157,6 @@
             JSON.stringify(history);
     }
 
-    // This method wraps every word in a sentence with a javascript click function.
-function writeSentence(words) {
- for(i = 0; i < words.length; i++) {
-  var word = words[i];
-  document.write('<span class="white" id="word.' + i + '">');
-  document.write('<a href="javascript:clickWord(' + i + ')"> ');
-  document.write(word);
-  document.write('</a>');
-  document.write('</span>');
- }
-}
 
     // This method wraps every word in a sentence with a javascript click function.
     function writeSentence(words) {
