@@ -33,14 +33,17 @@
     //     "Actions may span across multiple sentences. " +
     //     "Please submit one action at a time until all actions in the provided " +
     //     "text have been submitted.";
-    const sentence = "Rubis Hypnotic Pattern Bardic Inspiration Counterspell " +
-        "imps and the devil Lavander hooded warlock";
-    // const sentence = "This sentence should show up"
+    const sentence = "Rubis sees his friends in danger, and pulls his trusty " +
+        "spoons from his back pocket. With a quick rhythmic clatter, they " +
+        "start to glow, providing Lavander with Bardic Inspiration. He then " +
+        "turns his attention to the barbed devil and chittering imps that are " +
+        "slashing at Rus. The spoons in his hand clack faster and faster as " +
+        "faint voices make themselves heard in the imps' minds. These voices " +
+        "intensify as Rubis continues casting Fear, conjuring terrifying " +
+        "possibilities and magical horrors in their minds' eye.";
 
     // split based on one or more whitespace
     const words = sentence.split(/\s+/);
-        // display text
-    writeSentence(words);
     const actions = [];
     let currentAction = {};
     actions.unshift(currentAction);
@@ -86,7 +89,6 @@
     });
 
     function tagCurrentWords(tag) {
-        console.log(selectedIndices)
         if (selectedIndices.size === 0) {
             document.getElementById("warnings").innerHTML =
                 "Please select one or more words to tag as an entity."
@@ -95,17 +97,14 @@
         }
         history.unshift(tag);
         const newWords = Array.from(selectedIndices).sort().map(i => words[i]);
-        console.log(newWords)
         if (currentAction.hasOwnProperty(tag)) {
             currentAction[tag].unshift(newWords);
         } else {
-            index = {}
-            index[newWords] = Array.from(selectedIndices).sort()
-            currentAction[tag] = [index];
+            currentAction[tag] = [newWords];
         }
         // set new tag colors
         selectedIndices.forEach(i =>
-            getWordElement(i).className = `tag ${tag}`);
+            getWordElement(i).className = "tag " + tag);
         selectedIndices.clear();
         displayCurrentActions();
         displayHistory();
@@ -166,13 +165,31 @@
     }
 
     // This method wraps every word in a sentence with a javascript click function.
+function writeSentence(words) {
+ for(i = 0; i < words.length; i++) {
+  var word = words[i];
+  document.write('<span class="white" id="word.' + i + '">');
+  document.write('<a href="javascript:clickWord(' + i + ')"> ');
+  document.write(word);
+  document.write('</a>');
+  document.write('</span>');
+ }
+}
+
+    // This method wraps every word in a sentence with a javascript click function.
     function writeSentence(words) {
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
-            document.write(
-                ` <span><a id="word.${i}" class="untagged" href="">${word}</a></span> `
-            );
-            document.getElementById(`word.${i}`).addEventListener("click", (e) => {
+            document.write('<span class="white" id="word.' + i + '">');
+            // document.write('<a href="javascript:clickWord(' + i + ')"> ');
+            document.write(word);
+            document.write(' ')
+            document.write('</a>');
+            document.write('</span>');
+            // document.write(
+            //     ` <span><a id="word.${i}" class="untagged" href="">${word}</a></span> `
+            // );
+            document.getElementById("word." + i).addEventListener("click", (e) => {
                 e.preventDefault();
                 clickWord(i);
                 return false;
@@ -181,7 +198,7 @@
     }
 
     function getWordElement(i) {
-        return document.getElementById(`word.${i}`);
+        return document.getElementById("word." + i);
     }
 
     function clearWarning() {
@@ -203,16 +220,17 @@
             wordElement.className = "tentative";
         }
     }
-
-    function submit() {
-        console.log(currentAction)
+    
+    function handleFormSubmit() {
         const urlParams = new URLSearchParams(window.location.search)
         document.getElementById('inputAssignmentId').value = urlParams.get('assignmentId')
         document.getElementById('inputCoordinates').value = JSON.stringify(currentAction)
+        console.log(JSON.stringify(currentAction))
         document.getElementById('mturk_form').submit()
     }
 
-
+    // display text
+    writeSentence(words);
 
     window.addEventListener("load", () => {
         displayCurrentActions();
@@ -237,11 +255,11 @@
     </tr>
     <tr>
         <td>2</td>
-        <td><button id="target-button" onclick="tagCurrentWords('target')">Target(s) of the action</button></td>
+        <td><button id="target-button" onclick="tagCurrentWords('target')">One target of the action</button></td>
     </tr>
     <tr>
         <td>3</td>
-        <td><button id="attack-button" onclick="tagCurrentWords('attack')">A (non spell) attack being made with...</button></td>
+        <td><button id="attack-button" onclick="tagCurrentWords('attack')">Something being used to make a (non spell) attack</button></td>
     </tr>
     <tr>
         <td>4</td>
@@ -271,10 +289,10 @@
 </div>
 <div id="warnings" class="warning"></div>
 <div class="complete">
-    <button id="submit-button" onclick='submit()'>Finished with this block of text</button>
+    <button id="submit-button" onclick='handleFormSubmit()'>Finished with this block of text</button>
     <form method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
-    <input type="hidden" id="inputCoordinates" name="coordinates">
     <input type="hidden" id="inputAssignmentId" name="assignmentId">
+    <input type='hidden' value='' name='data' id='data'/>
     </form>
     <button id="nothing-button">There are no actions in this text</button>
 </div>
