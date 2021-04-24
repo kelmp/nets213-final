@@ -33,14 +33,7 @@
     //     "Actions may span across multiple sentences. " +
     //     "Please submit one action at a time until all actions in the provided " +
     //     "text have been submitted.";
-    const sentence = "Rubis sees his friends in danger, and pulls his trusty " +
-        "spoons from his back pocket. With a quick rhythmic clatter, they " +
-        "start to glow, providing Lavander with Bardic Inspiration. He then " +
-        "turns his attention to the barbed devil and chittering imps that are " +
-        "slashing at Rus. The spoons in his hand clack faster and faster as " +
-        "faint voices make themselves heard in the imps' minds. These voices " +
-        "intensify as Rubis continues casting Fear, conjuring terrifying " +
-        "possibilities and magical horrors in their minds' eye.";
+    const sentence = "${columns3}"
 
     // split based on one or more whitespace
     const words = sentence.split(/\s+/);
@@ -290,9 +283,10 @@ function writeSentence(words) {
 <div id="warnings" class="warning"></div>
 <div class="complete">
     <button id="submit-button" onclick='handleFormSubmit()'>Finished with this block of text</button>
-    <form method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
+    <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
+    <input type="hidden" id="inputCoordinates" name="coordinates">
     <input type="hidden" id="inputAssignmentId" name="assignmentId">
-    <input type='hidden' value='' name='data' id='data'/>
+<!--     <input type='hidden' value='' name='data' id='data'/> -->
     </form>
     <button id="nothing-button">There are no actions in this text</button>
 </div>
