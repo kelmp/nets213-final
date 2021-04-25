@@ -162,7 +162,7 @@
     function writeSentence(words) {
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
-            document.write('<span class="white" id="word.' + i + '">');
+            document.write('<span><a id="word.' + i + '" class="untagged" href="">');
             // document.write('<a href="javascript:clickWord(' + i + ')"> ');
             document.write(word);
             document.write(' ')
@@ -206,8 +206,8 @@
     function handleFormSubmit() {
         const urlParams = new URLSearchParams(window.location.search)
         document.getElementById('inputAssignmentId').value = urlParams.get('assignmentId')
-        document.getElementById('inputCoordinates').value = JSON.stringify(currentAction)
-        console.log(JSON.stringify(currentAction))
+        document.getElementById('inputCoordinates').value = JSON.stringify(actions)
+        // console.log(JSON.stringify(currentAction))
         document.getElementById('mturk_form').submit()
     }
 
@@ -273,7 +273,7 @@
 <div class="complete">
     <button id="submit-button" onclick='handleFormSubmit()'>Finished with this block of text</button>
     <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
-    <input type="hidden" id="inputCoordinates" name="coordinates">
+    <input type="hidden" id="inputCoordinates" name="tags">
     <input type="hidden" id="inputAssignmentId" name="assignmentId">
 <!--     <input type='hidden' value='' name='data' id='data'/> -->
     </form>
