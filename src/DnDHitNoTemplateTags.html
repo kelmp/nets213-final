@@ -41,7 +41,6 @@
 
     // submit tag on keypress
     $(document).keydown(e => {
-        console.log(e.which);
         switch (e.which) {
             case 49: // 1
                 tagCurrentWords("creature");
@@ -74,7 +73,7 @@
                 undo();
                 break;
             default:
-                console.log("No tag selected");
+                // console.log("No tag selected");
                 break;
         }
     });
@@ -87,11 +86,16 @@
             return;
         }
         history.unshift(tag);
-        const newWords = Array.from(selectedIndices).sort().map(i => words[i]);
+        const newIndices = Array.from(selectedIndices).sort();
+        const newWords = newIndices.map(i => words[i]);
         if (currentAction.hasOwnProperty(tag)) {
-            currentAction[tag].unshift(newWords);
+            currentAction[tag]["words"].unshift(newWords);
+            currentAction[tag]["indices"].unshift(newIndices);
         } else {
-            currentAction[tag] = [newWords];
+            currentAction[tag] = {
+                words: [newWords],
+                indices: [newIndices]
+            };
         }
         // set new tag colors
         selectedIndices.forEach(i =>
@@ -121,28 +125,31 @@
     }
 
     function undo() {
-        // TODO: make this undo highlighting as well
-        const len = history.length;
-        if (len === 0) {
+        if (history.length === 0) {
             return;
         }
-        let toUndo = history.shift();
-        switch (toUndo) {
-            case "submitted":
-                actions.shift();
-                currentAction = actions[0];
-                break;
-            default:
-                const entities = currentAction[toUndo];
-                if (entities.length === 1) {
-                    delete currentAction[toUndo];
-                } else {
-                    entities.shift();
-                }
-                break;
+        const toUndo = history.shift();
+        if (toUndo === "submitted") {
+            actions.shift();
+            currentAction = actions[0];
+        } else {
+            const entityIndices = currentAction[toUndo]["indices"];
+            // undo formatting on most recent selections
+            clearSpecificHighlights(entityIndices.shift());
+            if (entityIndices.length === 0) {
+                delete currentAction[toUndo];
+            } else {
+                // more than 1 word/index currently stored
+                // indices list has already been shifted
+                currentAction[toUndo]["words"].shift();
+            }
         }
         displayCurrentActions();
         displayHistory();
+    }
+
+    function clearSpecificHighlights(indices) {
+        indices.forEach(i => getWordElement(i).className = "untagged");
     }
 
     function displayCurrentActions() {
@@ -151,8 +158,8 @@
     }
 
     function displayHistory() {
-        document.getElementById("history").innerHTML =
-            JSON.stringify(history);
+        // document.getElementById("history").innerHTML =
+        //     JSON.stringify(history);
     }
 
 
@@ -281,8 +288,8 @@
     </form>
     <button id="nothing-button">There are no actions in this text</button>
 </div>
-<div>History</div>
-<div id="history"></div>
+<!--<div>History</div>-->
+<!--<div id="history"></div>-->
 <div>Current actions</div>
 <div id="current-actions" class="actions"></div>
 
