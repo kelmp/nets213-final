@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+  <!-- Bulma CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+  />
+  <!-- jQuery CDN -->
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <title>D&D Move Generator</title>
+</head>
+<body>
+  <div class="mt-5 ml-5">
+    <h1 class="title">D&D Move Generator</h1>
+    <h2 class="subtitle">NETS 213 Final Project</h2>
+    <div class="columns">
+      <div class="column is-half">
+        <textarea
+          id="input"
+          class="textarea is-link mb-4"
+          placeholder="Describe your action"
+        ></textarea>
+        <button id="submit" class="button is-link mb-4">Submit</button>
+        <textarea
+          id="output"
+          class="textarea is-link mb-4"
+          placeholder="Annotated action"
+          readonly
+        ></textarea>
+      </div>
+    </div>
+  </div>
+  <script>
+    $("#submit").click((event) => {
+      $.post(
+        "/model",
+        {
+          action: $("#input").val()
+        },
+        (response) => {
+            response = JSON.parse(response);
+            $("#output").val(response.action);
+        }
+      );
+    });
+  </script>
+</body>
