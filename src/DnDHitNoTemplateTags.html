@@ -22,11 +22,6 @@
     div.warning { color: darkred; }
     div.complete { padding-top: 2em; padding-bottom: 2em; }
     div.actions { white-space: pre-wrap; }
-
-    /*A:link {text-decoration: none; color: black;}*/
-    /*A:visited {text-decoration: none; color: black;}*/
-    /*A:active {text-decoration: none; color: black;}*/
-    /*A:hover {text-decoration: none; color: black;}*/
 </style>
 <script type="text/Javascript">
     // const sentence = "This is some sample text. " +
@@ -74,6 +69,9 @@
                 break;
             case 9: // tab
                 submitAction();
+                break;
+            case 90: // Z
+                undo();
                 break;
             default:
                 console.log("No tag selected");
@@ -233,45 +231,49 @@
     <tbody>
     <tr>
         <td>1</td>
-        <td><button id="creature-button" onclick="tagCurrentWords('creature')">Creature doing the action</button></td>
+        <td><button id="creature-button" onclick="tagCurrentWords('creature');">Creature doing the action</button></td>
     </tr>
     <tr>
         <td>2</td>
-        <td><button id="target-button" onclick="tagCurrentWords('target')">One target of the action</button></td>
+        <td><button id="target-button" onclick="tagCurrentWords('target');">One target of the action</button></td>
     </tr>
     <tr>
         <td>3</td>
-        <td><button id="attack-button" onclick="tagCurrentWords('attack')">Something being used to make a (non spell) attack</button></td>
+        <td><button id="attack-button" onclick="tagCurrentWords('attack');">Something being used to make a (non spell) attack</button></td>
     </tr>
     <tr>
         <td>4</td>
-        <td><button id="spell-button" onclick="tagCurrentWords('spell')">The spell being cast</button></td>
+        <td><button id="spell-button" onclick="tagCurrentWords('spell');">The spell being cast</button></td>
     </tr>
     <tr>
         <td>5</td>
-        <td><button id="feature-button" onclick="tagCurrentWords('feature')">The class, racial, or other feature being used</button></td>
+        <td><button id="feature-button" onclick="tagCurrentWords('feature');">The class, racial, or other feature being used</button></td>
     </tr>
     <tr>
         <td>Q</td>
-        <td><button id="attack-roll-button" onclick="tagCurrentWords('attackRoll')">The result of an attack roll</button></td>
+        <td><button id="attack-roll-button" onclick="tagCurrentWords('attackRoll');">The result of an attack roll</button></td>
     </tr>
     <tr>
         <td>W</td>
-        <td><button id="damage-roll-button" onclick="tagCurrentWords('damageRoll')">The result of a damage roll</button></td>
+        <td><button id="damage-roll-button" onclick="tagCurrentWords('damageRoll');">The result of a damage roll</button></td>
     </tr>
     <tr>
         <td>E</td>
-        <td><button id="saving-throw-button" onclick="tagCurrentWords('savingThrow')">The result of a saving throw</button></td>
+        <td><button id="saving-throw-button" onclick="tagCurrentWords('savingThrow');">The result of a saving throw</button></td>
+    </tr>
+    <tr>
+        <td>Z</td>
+        <td><button id="undo-button" onclick="undo();">Undo last tag/action</button></td>
+    </tr>
+    <tr>
+        <td>Tab</td>
+        <td><button id="submit-action-button" onclick="submitAction();">Done with this action</button></td>
     </tr>
     </tbody>
 </table>
-<div>
-    <button id="action-button" onclick="submitAction()">Done with this action</button>
-    <button id="undo-button" onclick="undo()">Undo</button>
-</div>
 <div id="warnings" class="warning"></div>
 <div class="complete">
-    <button id="submit-button" onclick='handleFormSubmit()'>Finished with this block of text</button>
+    <button id="submit-button" onclick='handleFormSubmit();'>Finished with this block of text</button>
     <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
     <input type="hidden" id="inputCoordinates" name="tags">
     <input type="hidden" id="inputAssignmentId" name="assignmentId">
