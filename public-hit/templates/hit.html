@@ -356,8 +356,10 @@
     }
 
     function handleFormSubmit() {
+        let name = $("input#name-input").val()
+        name = name !== "" ? name : "undefined"
         $.post("/hit", {
-            name: $("input#name-input").val(),
+            name: name,
             text: sentence,
             actions: JSON.stringify(actions)
         });

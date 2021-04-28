@@ -40,8 +40,29 @@ def save_hit():
     actions = request.form["actions"]
     with open("responses.csv", "a") as file:
         csv_out = csv.writer(
-            file, delimiter=",", quotechar="`", quoting=csv.QUOTE_NONNUMERIC
+            file, delimiter=",", quotechar="`", quoting=csv.QUOTE_ALL
         )
         csv_out.writerow([worker_id, text, actions])
 
     return json.dumps({"success": True}), 200, {"ContentType": "application/json"}
+
+
+@app.route("/responses", methods=["GET"])
+def view_responses():
+    response = "<table><tr><th>{}</th><th>{}</th><th>{}</th></tr>".format(
+        "WorkerId", "Input.prompt", "Answer.answer"
+    )
+    with open("responses.csv", "r") as file:
+        csv_in = csv.reader(
+            file, delimiter=",", quotechar="`", quoting=csv.QUOTE_ALL
+        )
+        next(csv_in)
+        for row in csv_in:
+            print(row[2])
+            response += "<tr><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                row[0], row[1], row[2]
+            )
+
+    response += "</table>"
+
+    return response
