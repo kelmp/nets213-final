@@ -107,8 +107,8 @@ We have come up with the following rubric for our project:
 
 ## Code Documentation
 
-- HIT
-- QC
+- HIT: Users select one or more words with the mouse, then use buttons or hotkeys to tag them as a single entity with a corresponding tag. Once all entities for a single action are tagged, the user can click "Done with this action" and move on to another action in the same text sample. If there are no more actions in the current text sample, the user can click "Finished with this block of text" to submit all of their tags.
+- QC: Gold standard answers are used to compute F1 scores for each worker. After that, weighted majority voting is used to determine which of the answers submitted by workers are "correct." An answer is accepted if the average F1 score of the workers who listed it as an answer is at least as high as the average F1 score across all workers.
 - Aggregation
 - Analysis - We plan to collect data from both Turkers and DnD experts (in the form of friends) to train the model on two sets of data. We will then conduct an analysis on the performance differences between the two demographics
 
