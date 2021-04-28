@@ -109,7 +109,16 @@ We have come up with the following rubric for our project:
 
 - HIT: Users select one or more words with the mouse, then use buttons or hotkeys to tag them as a single entity with a corresponding tag. Once all entities for a single action are tagged, the user can click "Done with this action" and move on to another action in the same text sample. If there are no more actions in the current text sample, the user can click "Finished with this block of text" to submit all of their tags.
 - QC: Gold standard answers are used to compute F1 scores for each worker. After that, weighted majority voting is used to determine which of the answers submitted by workers are "correct." An answer is accepted if the average F1 score of the workers who listed it as an answer is at least as high as the average F1 score across all workers.
-- Aggregation
+- Aggregation:
+The answer_to_hashable method in common.py converts the object resulting from a json.loads() call into a form suitable
+  for the DataFrame.explode(). It takes in the actions parameter, where the outermost list is the list of actions submitted by a
+  single worker. The dict maps a single action's tags to a list of phrases with that tag for this action. Each phrase is a list 
+  made up of individual words.
+  This returns a list of JSON strings, so that when explode() is called, each row contains the JSON for a single action with 
+  keys sorted alphabetically.
+The read_answers method makes use of answer_to_hashtable to produce a dataframe from which answer a groupby can be run
+  based on the 'Answer.answer' column containing the labels provided by the responder which we can use to train a classifier (this
+  step is done in aggregation2.py).
 - Analysis - We plan to collect data from both Turkers and DnD experts (in the form of friends) to train the model on two sets of data. We will then conduct an analysis on the performance differences between the two demographics
 
 ## HIT Instructions
