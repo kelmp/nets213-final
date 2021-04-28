@@ -115,9 +115,8 @@ The answer_to_hashable method in common.py converts the object resulting from a 
   single worker. The dict maps a single action's tags to a list of phrases with that tag for this action.
   This returns a list of JSON strings, so that when explode() is called, each row contains the JSON for a single action with 
   keys sorted alphabetically.
-The read_answers method makes use of answer_to_hashtable to produce a dataframe from which a groupby can be run
-  based on the 'Answer.answer' column containing the labels provided by the responder, which we can use to train a classifier (this
-  step is done in aggregation2.py).
+A dataframe is produced from which a groupby can be run based on the 'Answer.answer' column containing the labels provided by the responder, 
+  which we can use to train a classifier.
 - Analysis - We plan to collect data from both Turkers and DnD experts (in the form of friends) to train the model on two sets of data. We will then conduct an analysis on the performance differences between the two demographics
 
 ## HIT Instructions
