@@ -110,5 +110,6 @@ We have come up with the following rubric for our project:
 - HIT
 - QC
 - Aggregation
+- Analysis - We plan to collect data from both Turkers and DnD experts (in the form of friends) to train the model on two sets of data. We will then conduct an analysis on the performance differences between the two demographics
 
 ## HIT Instructions
