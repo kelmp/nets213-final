@@ -110,3 +110,5 @@ We have come up with the following rubric for our project:
 - HIT
 - QC
 - Aggregation
+
+## HIT Instructions
