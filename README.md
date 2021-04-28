@@ -104,3 +104,9 @@ We have come up with the following rubric for our project:
 - `src/qc.py` - our current implementation of quality control, which uses gold
   standard accuracies to vote on correct actions
 - `src/DnD-HIT.html` - our current implementation of the MTurk HIT
+
+## Code Documentation
+
+- HIT
+- QC
+- Aggregation
