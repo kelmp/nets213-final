@@ -24,8 +24,6 @@
     div.actions { white-space: pre-wrap; }
 </style>
 <script type="text/Javascript">
-
-
     // const sentence = "Rubis sees his friends in danger, and pulls his trusty " +
     //     "spoons from his back pocket. With a quick rhythmic clatter, they " +
     //     "start to glow, providing Lavander with Bardic Inspiration. He then " +
@@ -231,8 +229,9 @@
 
         // For testing when the above .submit() call is commented out
         // Shouldn't affect actual submission, but if it does, feel free to
-        // comment this out
-        actions.unshift();
+        // comment these lines out
+        actions.unshift({});
+        displayCurrentActions();
     }
 
     // display text
