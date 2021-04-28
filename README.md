@@ -120,3 +120,11 @@ A dataframe is produced from which a groupby can be run based on the 'Answer.ans
 - Analysis - We plan to collect data from both Turkers and DnD experts (in the form of friends) to train the model on two sets of data. We will then conduct an analysis on the performance differences between the two demographics
 
 ## HIT Instructions
+1. Familiarize yourself with the categories listed below the text. 
+2. Read the text. 
+3. For each action in the text, complete Steps 4 and 5. 
+4. Click all words that you think belong in the same category (they will be highlighted a certain color), then select a category using either mouse or key inputs. 
+5. Repeat Step 4 for each of the categories you wish to label in the action. 
+
+Note: You can assign multiple categories to a single word or group of words. 
+
