@@ -91,6 +91,14 @@
             </button>
           </td>
         </tr>
+        <tr>
+            <td>Z</td>
+            <td><button id="undo-button" onclick="undo();">Undo last tag/action</button></td>
+        </tr>
+        <tr>
+            <td>Tab</td>
+            <td><button id="submit-action-button" onclick="submitAction();">Done with this action</button></td>
+        </tr>
       </tbody>
     </table>
     <div>
@@ -104,11 +112,11 @@
       <button id="submit-button" onclick="handleFormSubmit()">
         Finished with this block of text
       </button>
-      <button id="nothing-button">There are no actions in this text</button>
+      <button id="nothing-button" onclick="handleEmptyFormSubmit()">There are no actions in this text</button>
       <input type="text" id="name-input" placeholder="Your name here" /></input>
     </div>
-    <div>History</div>
-    <div id="history"></div>
+    <!-- <div>History</div>
+    <div id="history"></div> -->
     <div>Current actions</div>
     <div id="current-actions" class="actions"></div>
   </body>
@@ -228,6 +236,9 @@
             case 9: // tab
                 submitAction();
                 break;
+            case 90: // Z
+                undo();
+                break;
             default:
                 console.log("No tag selected");
                 break;
@@ -242,11 +253,16 @@
             return;
         }
         history.unshift(tag);
-        const newWords = Array.from(selectedIndices).sort().map(i => words[i]);
+        const newIndices = Array.from(selectedIndices).sort();
+        const newWords = newIndices.map(i => words[i]);
         if (currentAction.hasOwnProperty(tag)) {
-            currentAction[tag].unshift(newWords);
+            currentAction[tag]["words"].unshift(newWords);
+            currentAction[tag]["indices"].unshift(newIndices);
         } else {
-            currentAction[tag] = [newWords];
+            currentAction[tag] = {
+                words: [newWords],
+                indices: [newIndices]
+            };
         }
         // set new tag colors
         selectedIndices.forEach(i =>
@@ -276,28 +292,31 @@
     }
 
     function undo() {
-        // TODO: make this undo highlighting as well
-        const len = history.length;
-        if (len === 0) {
+        if (history.length === 0) {
             return;
         }
-        let toUndo = history.shift();
-        switch (toUndo) {
-            case "submitted":
-                actions.shift();
-                currentAction = actions[0];
-                break;
-            default:
-                const entities = currentAction[toUndo];
-                if (entities.length === 1) {
-                    delete currentAction[toUndo];
-                } else {
-                    entities.shift();
-                }
-                break;
+        const toUndo = history.shift();
+        if (toUndo === "submitted") {
+            actions.shift();
+            currentAction = actions[0];
+        } else {
+            const entityIndices = currentAction[toUndo]["indices"];
+            // undo formatting on most recent selections
+            clearSpecificHighlights(entityIndices.shift());
+            if (entityIndices.length === 0) {
+                delete currentAction[toUndo];
+            } else {
+                // more than 1 word/index currently stored
+                // indices list has already been shifted
+                currentAction[toUndo]["words"].shift();
+            }
         }
         displayCurrentActions();
         displayHistory();
+    }
+
+    function clearSpecificHighlights(indices) {
+        indices.forEach(i => getWordElement(i).className = "untagged");
     }
 
     function displayCurrentActions() {
@@ -306,10 +325,9 @@
     }
 
     function displayHistory() {
-        document.getElementById("history").innerHTML =
-            JSON.stringify(history);
+        // document.getElementById("history").innerHTML =
+        //     JSON.stringify(history);
     }
-
 
     // This method wraps every word in a sentence with a javascript click function.
     function writeSentence(words) {
@@ -356,6 +374,10 @@
     }
 
     function handleFormSubmit() {
+        if (Object.keys(actions[0]).length === 0) {
+            actions.shift();
+        }
+
         let name = $("input#name-input").val()
         name = name !== "" ? name : "undefined"
         $.post("/hit", {
@@ -371,6 +393,34 @@
         history = [];
         selectedIndices = new Set();
 
+        actions.unshift();
+        displayCurrentActions();
+        displayHistory();
+        clearWarning();
+        populateHit();
+    }
+
+    function handleEmptyFormSubmit() {
+        if (Object.keys(actions[0]).length === 0) {
+            actions.shift();
+        }
+
+        let name = $("input#name-input").val()
+        name = name !== "" ? name : "undefined"
+        $.post("/hit", {
+            name: name,
+            text: sentence,
+            actions: "[]"
+        });
+
+        // reset all state
+        actions = [];
+        currentAction = {};
+        actions.unshift(currentAction);
+        history = [];
+        selectedIndices = new Set();
+
+        actions.unshift();
         displayCurrentActions();
         displayHistory();
         clearWarning();
