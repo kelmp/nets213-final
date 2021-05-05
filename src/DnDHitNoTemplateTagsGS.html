@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>D&D Tagging</title>
+
+    <div id="Page1">
+        <p style="color:red"> <strong> IMPORTANT INFORMATION, PLEASE READ BEFORE BEGINNING </strong> <br>
+        This HIT is intended for people who have experience with Dungeons and Dragons 5th edition. If you have experience with this game, please watch this short <a href='https://youtu.be/r7UqxbtfnJQ' target="_blank"> <u>video</u></a> explaining how to do the HIT. After watching the video, label the sentence below this paragraph and tag text. You'll be eligible for a higher paying HIT if you consistently identify actions correctly <br> <br></p>
+</div>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
@@ -33,7 +38,7 @@
     //     "intensify as Rubis continues casting Fear, conjuring terrifying " +
     //     "possibilities and magical horrors in their minds' eye.";
 
-    const sentence = "${columns3}"
+    const sentence = "${prompt}"
 
     // split based on one or more whitespace
     const words = sentence.split(/\s+/);
@@ -178,9 +183,7 @@
             document.write(' ')
             document.write('</a>');
             document.write('</span>');
-            // document.write(
-            //     ` <span><a id="word.${i}" class="untagged" href="">${word}</a></span> `
-            // );
+
             document.getElementById("word." + i).addEventListener("click", (e) => {
                 e.preventDefault();
                 clickWord(i);
@@ -241,10 +244,13 @@
         displayCurrentActions();
         displayHistory();
     });
+
+
 </script>
 <body>
 <br />
-<div class="instructions">Use keybinds or the buttons below to tag your currently selected words.</div>
+<div class="instructions">Use keybinds or the buttons below to tag your currently selected words. If you need more instruction, please watch the <a href='https://youtu.be/r7UqxbtfnJQ' target="_blank"><u>instructional video</u></a>. It's the same video as above.</div><br>
+
 
 <table>
     <thead>
@@ -298,8 +304,8 @@
 </table>
 <div id="warnings" class="warning"></div>
 <div class="complete">
-    <button id="submit-button" onclick='handleFormSubmit();'>Finished with this block of text</button>
-    <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
+    <button id="submit-button" onclick='handleFormSubmit();'>Finished with this block of text (submit this HIT)</button>
+    <form method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
     <input type="hidden" id="inputCoordinates" name="tags">
     <input type="hidden" id="inputAssignmentId" name="assignmentId">
 <!--     <input type='hidden' value='' name='data' id='data'/> -->
@@ -310,6 +316,10 @@
 <!--<div id="history"></div>-->
 <div>Current actions</div>
 <div id="current-actions" class="actions"></div>
+</div>
+
+
+
 
 </body>
 </html>
