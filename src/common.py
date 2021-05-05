@@ -4,14 +4,20 @@ import pandas as pd
 import json
 
 
-def answer_to_hashable(actions: List[Dict[str, List[List[str]]]]) -> List[str]:
+def answer_to_hashable(actions: List[Dict[str, Dict[str, List[List[str]]]]]) \
+        -> List[str]:
     """
+    NOTE: THIS ONLY WORKS WITH THE NEW SCHEMA! Old sample data that didn't
+    include indices will *not* work with this.
+    
     Converts the object resulting from a json.loads() call into a form suitable
     for DataFrame.explode().
-    :param actions: Outermost list is the list of actions submitted by a
-                    single worker. The dict maps a single action's tags to
-                    a list of phrases with that tag for this action.
-                    Each phrase is a list made up of individual words.
+    :param actions:
+        Outermost list is a worker's list of actions for a text sample.
+        Each action is a dict mapping tags to a dict with two keys:
+            "words" and "indices".
+        "words" maps to a list of list of strings (an inner list is an entity)
+        "indices" maps to a list of list of ints
     :return: A list of JSON strings, such that when explode() is called,
              each row contains the JSON for a single action. Keys should be
              sorted alphabetically.
@@ -20,7 +26,7 @@ def answer_to_hashable(actions: List[Dict[str, List[List[str]]]]) -> List[str]:
     # (which represent individual actions) are.
     for a_dict in actions:
         for tag in a_dict:
-            a_dict[tag] = sorted(a_dict[tag])
+            a_dict[tag] = sorted(a_dict[tag]['words'])
     return [json.dumps(a_dict, sort_keys=True) for a_dict in actions]
 
 
