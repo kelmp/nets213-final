@@ -35,10 +35,9 @@ def read_json(filename: str):
                         for i in range(end):
                             before_end += text_split[i].count(end_word)
                         
-                        start_index = find_nth(text, start_word, before_start) + 1
-                        end_index = find_nth(text, end_word, before_end) + len(end_word) + 1
+                        start_index = find_nth(text, start_word, before_start)
+                        end_index = find_nth(text, end_word, before_end) + len(end_word)
                         entities.append((start_index, end_index, key))
-
                 data.append((text, { "entities": entities }))
     return data
 
@@ -49,4 +48,13 @@ def find_nth(string: str, substring: str, n: int):
         return string.find(substring, find_nth(string, substring, n - 1) + 1)
 
 if __name__ == "__main__":
-    read_json("mturk_labels.csv")
+    data = read_json("mturk_labels.csv")
+    # broken_rows = set()
+    # for entry in data:
+    #     for l1 in entry[1]["entities"]:
+    #         for l2 in entry[1]["entities"]:
+    #             if l1 == l2:
+    #                 continue
+    #             if not ((l2[0] <= l1[0] and l2[1] <= l1[0]) or (l2[0] >= l1[0] and l2[1] >= l1[1])):
+    #                 broken_rows.add(entry[0])
+    # print(len(broken_rows))
