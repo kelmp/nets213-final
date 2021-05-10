@@ -14,6 +14,7 @@ def read_json(filename: str):
     with open(filename, "r") as file:
         csv_in = csv.reader(file, delimiter=",", quotechar="\"", quoting=csv.QUOTE_ALL)
         next(csv_in) # skip the header row
+        broken_rows = set()
         for row in csv_in:
             text = row[0]
             text_split = list(filter(lambda x: x != "", text.split(" ")))
@@ -37,7 +38,8 @@ def read_json(filename: str):
                         start_index = find_nth(text, start_word, before_start) + 1
                         end_index = find_nth(text, end_word, before_end) + len(end_word) + 1
                         entities.append((start_index, end_index, key))
-            data.append((text, { "entities": entities }))
+
+                data.append((text, { "entities": entities }))
     return data
 
 def find_nth(string: str, substring: str, n: int):
@@ -47,4 +49,4 @@ def find_nth(string: str, substring: str, n: int):
         return string.find(substring, find_nth(string, substring, n - 1) + 1)
 
 if __name__ == "__main__":
-    print(read_json("mturk_labels.csv"))
+    read_json("mturk_labels.csv")
