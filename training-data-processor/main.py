@@ -16,7 +16,7 @@ def read_json(filename: str):
         next(csv_in) # skip the header row
         for row in csv_in:
             text = row[0]
-            text_split = text.split(" ")
+            text_split = list(filter(lambda x: x != "", text.split(" ")))
             for action in json.loads(row[1]):
                 entities = []
                 for key in action.keys():
