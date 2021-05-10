@@ -14,11 +14,11 @@ def read_json(filename: str):
     with open(filename, "r") as file:
         csv_in = csv.reader(file, delimiter=",", quotechar="`", quoting=csv.QUOTE_ALL)
         next(csv_in) # skip the header row
-        entities = []
         for row in csv_in:
             text = row[1]
             text_split = text.split(" ")
             for action in json.loads(row[2]):
+                entities = []
                 for key in action.keys():
                     for index in action[key]["indices"]:
                         start = index[0]
@@ -39,8 +39,7 @@ def read_json(filename: str):
                         start_index = find_nth(text, start_word, before_start)
                         end_index = find_nth(text, end_word, before_end) + len(end_word)
                         entities.append((start_index, end_index, key))
-            data.append((text, { "entities": entities }))
-
+                data.append((text, { "entities": entities }))
     return data
 
 def find_nth(string: str, substring: str, n: int):
