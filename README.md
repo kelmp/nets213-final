@@ -23,7 +23,9 @@ majority vote using weighted averages. Our current implementation is in
 In order to train the model we need to during all of the MTurk data into a CSV
 that can be read into the model. We also need to ensure there are no duplicates,
 sentences are correctly structured, and may possibly perform NLP operations to
-sanitize the data. Our current rough implementation is in `src/aggregation2.py`.
+sanitize the data. Our implementation is in `src/aggregation2.py`. Additionally,
+we needed to aggregate the raw data into training data. Our implementation is found 
+in `training-data-processor`
 
 ### Trained Model
 
