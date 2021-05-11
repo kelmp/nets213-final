@@ -105,6 +105,7 @@ We have come up with the following rubric for our project:
   standard accuracies to vote on correct actions
 - `DnDHitNoTemplateTagsGS.html` - the MTurk Gold Standard HIT
 - `DnDHitNoTemplateTagsMain.html` - the MTurk main HIT
+- `trainingmodel.py` = the code that trains the model from the raw output data. 
 
 ## Code Documentation
 
