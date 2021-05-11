@@ -65,9 +65,9 @@ def gold_weighted_vote(gold_f1s: pd.Series, agg_out_path: str) \
     return valid
 
 
-f1s = compute_gold_f1("../data/sampleGoldCsv.csv", "gold_answer",
-                      "../data/sampleAggregationOutput.csv")
+f1s = compute_gold_f1("../data/random_tests/sampleGoldCsv.csv", "gold_answer",
+                      "../data/random_tests/sampleAggregationOutput.csv")
 print(f1s)
-vote_answers = gold_weighted_vote(f1s, "../data/qcInput.csv")
+vote_answers = gold_weighted_vote(f1s, "../data/random_tests/qcInput.csv")
 print(vote_answers)
 vote_answers.to_csv("../data/qcOutput.csv", quotechar="`", index=False)
