@@ -15,7 +15,7 @@ kind of action are they performing? Our current HIT design is in
 
 We will use an embedded Gold Standard in our MTurk HITs. The worker's
 performance on these Gold Standard examples is used as a weight to compute the
-majority vote using weighted averages. Our current rough implementation is in
+majority vote using weighted averages. Our current implementation is in
 `src/qc.py`.
 
 ### Aggregation
@@ -31,7 +31,7 @@ This is the actual model we are training with the aggregated data. The model
 will take in a plain text sentence and attempt to perform the same annotation
 process as the MTurk workers did previously. That is to say, it should identify
 the object of the sentence, target of an action, and the action being performed.
-These files will be in `ml-parser`.
+These files will be in `models`.
 
 ### User-Facing Application
 
