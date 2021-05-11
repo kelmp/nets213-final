@@ -24,7 +24,8 @@
           class="textarea is-link mb-4"
           placeholder="Describe your action"
         ></textarea>
-        <button id="submit" class="button is-link mb-4">Submit</button>
+        <button id="submitFriends" class="button is-link mb-4">Friends Model</button>
+        <button id="submitMTurk" class="button is-link mb-4">MTurk Model</button>
         <textarea
           id="output"
           class="textarea is-link mb-4"
@@ -35,11 +36,25 @@
     </div>
   </div>
   <script>
-    $("#submit").click((event) => {
+    $("#submitFriends").click((event) => {
       $.post(
         "/model",
         {
-          action: $("#input").val()
+          action: $("#input").val(),
+          model: "friends"
+        },
+        (response) => {
+            response = JSON.parse(response);
+            $("#output").val(response.action);
+        }
+      );
+    });
+    $("#submitMTurk").click((event) => {
+      $.post(
+        "/model",
+        {
+          action: $("#input").val(),
+          model: "mturk"
         },
         (response) => {
             response = JSON.parse(response);
