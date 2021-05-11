@@ -8,8 +8,10 @@ Let's overview the major components in this project.
 
 This is how we will annotation our training data. The worker will tag relevant
 things from the sentence, namely: who is the object, who is the target, what
-kind of action are they performing? Our current HIT design is in
-`src/DnD-HIT.html`.
+kind of action are they performing? Our current HIT design for the gold standard round
+is `src/DnDHitNoTemplateTagsGS.html`. Our HIT for the main round is `DnDHitNoTemplateTagsMain.html`.
+We also set up an endpoint for our friends to label data, which can be found [here](http://ec2-52-204-50-75.compute-1.amazonaws.com/)
+
 
 ### Quality Control
 
@@ -38,7 +40,8 @@ These files will be in `models`.
 ### User-Facing Application
 
 Web application with a simple input and output text box. When the user types in
-a plain text sentence, we run it through the trained model to get annotations.
+a plain text sentence, we run it through the trained model to get annotations. You can 
+try it out at the endpoint we set up [here](http://ec2-54-91-115-42.compute-1.amazonaws.com:5000/)
 
 
 ### Avrae Command Generator
@@ -47,7 +50,7 @@ The [Avrae Command Generator](https://avrae.io/) is a deterministic program
 which provides an API we can use to turn the users annotated sentence into a
 valid Dungeons & Dragons command. With this command, based on the user's
 free-form plain text input which has been annotated by our trained model, we can
-return a command corresponding to their sentence.
+return a command corresponding to their sentence. This will be left as future work
 
 ## Rubric
 
