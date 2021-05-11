@@ -104,7 +104,7 @@ We have come up with the following rubric for our project:
 - `src/qc.py` - our current implementation of quality control, which uses gold
   standard accuracies to vote on correct actions
 - `DnDHitNoTemplateTagsGS.html` - the MTurk Gold Standard HIT
-- `DnDHitNoTemplateTagsMain.html` - THe MTurk main HIT
+- `DnDHitNoTemplateTagsMain.html` - the MTurk main HIT
 
 ## Code Documentation
 
