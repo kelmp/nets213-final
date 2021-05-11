@@ -37,10 +37,7 @@ These files will be in `models`.
 
 Web application with a simple input and output text box. When the user types in
 a plain text sentence, we run it through the trained model to get annotations.
-Then, we send the annotated sentence through Avrae Command Generator API which,
-when provided the object, target, and action, will be able to generate a valid
-Dungeons & Dragons command. This valid command is then displayed to the users in
-the output text box.
+
 
 ### Avrae Command Generator
 
