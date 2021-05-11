@@ -101,13 +101,15 @@ We have come up with the following rubric for our project:
 - `data/sampleAggregationOutput.csv` - sample output from aggregation module
 - `data/qcInput.csv` - sample input to quality control module
 - `data/qcOutput.csv` - sample output from quality control module
+- `data/trainingData/friend_and_gold.csv` - final training data for friend model
+- `data/trainingData/mturk_and_gold.csv` - final training data for turker model
 - `src/aggregation2.py` - our current implementation of aggregation, centering
   around messy use of JSON strings
 - `src/qc.py` - our current implementation of quality control, which uses gold
   standard accuracies to vote on correct actions
-- `DnDHitNoTemplateTagsGS.html` - the MTurk Gold Standard HIT
-- `DnDHitNoTemplateTagsMain.html` - the MTurk main HIT
-- `trainingmodel.py` = the code that trains the model from the raw output data. 
+- `src/DnDHitNoTemplateTagsGS.html` - the MTurk Gold Standard HIT
+- `src/DnDHitNoTemplateTagsMain.html` - the MTurk main HIT
+- `models/trainingmodel.py` = the code that trains the model from the raw output data. 
 
 ## Code Documentation
 
